@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace MeuWorker
 {
@@ -18,8 +19,16 @@ namespace MeuWorker
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
+                    IConfiguration configuration = hostContext.Configuration;
+
                     services.AddHostedService<WorkerService1>()
                         .AddHostedService<WorkerService2>();
+
+                    services.Configure<HostOptions>(options =>
+                    {
+                        var ShutdownTimeoutInSeconds = configuration.GetSection("ServiceConfigurations").GetValue<double>("ShutdownTimeoutInSeconds");
+                        options.ShutdownTimeout = TimeSpan.FromSeconds(ShutdownTimeoutInSeconds);
+                    });
                 });
     }
 }
