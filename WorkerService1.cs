@@ -31,10 +31,10 @@ namespace MeuWorker
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("Worker Service 1 running at: {time}", DateTimeOffset.Now);
-                _logger.LogInformation("Worker Service 2 - Realizando processamento....");
-                
                 await Task.Delay(_serviceConfigurations.WorkerService1_IntervalInMilliseconds, stoppingToken);
+
+                //Your worker service code should be write here.
+                _logger.LogInformation("Worker Service 1 running at: {time}", DateTimeOffset.Now);
             }
         }
 

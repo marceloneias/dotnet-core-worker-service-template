@@ -30,11 +30,11 @@ namespace MeuWorker
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
-            {
-                _logger.LogInformation("Worker Service 2 running at: {time}", DateTimeOffset.Now);
-                _logger.LogInformation("Worker Service 2 - Realizando processamento....");
-                
+            {   
                 await Task.Delay(_serviceConfigurations.WorkerService2_IntervalInMilliseconds, stoppingToken);
+
+                //Your worker service code should be write here.
+                _logger.LogInformation("Worker Service 2 running at: {time}", DateTimeOffset.Now);
             }
         }
 
